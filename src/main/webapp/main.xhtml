@@ -5,7 +5,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
 <ui:composition template="uitemplates/heading.xhtml">
 
     <ui:define name="head">
@@ -15,109 +17,114 @@
     <ui:define name="main-content">
 
 
-            <div id="left-area" class="floating-areas">
+        <div id="left-area" class="floating-areas">
 
-                <div id="graph-block" class="content-plate">
-                    <div id="graph-heading" class="coloured-block">
-                        <span>Areas</span>
-                    </div>
-                    <div id="image-container">
-                        <ui:include src="resources/img/graph.svg" />
-                    </div>
+            <div id="graph-block" class="content-plate">
+                <div id="graph-heading" class="coloured-block">
+                    <span>Areas</span>
+                </div>
+                <div id="image-container">
+                    <ui:include src="resources/img/graph.svg"/>
+                </div>
+            </div>
+
+
+            <div id="form-block" class="content-plate">
+
+                <div id="form-heading" class="coloured-block">
+                    <span>Form</span>
                 </div>
 
+                <h:form id="values-form">
 
-                <div id="form-block" class="content-plate">
-
-                    <div id="form-heading" class="coloured-block">
-                        <span>Form</span>
-                    </div>
-
-                    <h:form id="values-form">
-
-                        <div id="x-block">
-                            <h:outputLabel for="x-field" value="X"/>
-                            <h:inputText id="x-field"
-                                         maxlength="8" autocomplete="off" placeholder="Number from -5 to 5">
+                    <div id="x-block">
+                        <h:outputLabel for="x-field" value="X" styleClass="form-labels"/>
+                        <div class="input-areas">
+                            <h:inputText id="x-field" styleClass="inner-input-field"
+                                         maxlength="8" autocomplete="off" a:placeholder="Number from -5 to 5">
                                 <f:validateRequired/>
                                 <f:validateDoubleRange minimum="-5" maximum="5"/>
                             </h:inputText>
                         </div>
+                    </div>
 
-                        <div id="y-block">
+                    <div id="y-block">
 
-                            <h:outputLabel for="slider-y" value="Y"/>
-                            <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                <p:inputText id="slider-y"/>
-                                <p:slider for="slider-y"/>
-                            </h:panelGrid>
 
+                        <h:outputLabel for="slider-y" value="Y" styleClass="form-labels"/>
+                        <div class="input-areas">
+                            <h:inputText disabled="true" id="slider-y" styleClass="inner-input-field"/>
+                            <p:slider for="slider-y" minValue="-3" maxValue="3" step="0.5"
+                                      styleClass="inner-input-field" style="fill:black;"/>
                         </div>
 
+                    </div>
 
-                        <div id="r-block">
 
-                            <h:panelGrid columns="5">
+                    <div id="r-block">
 
-                                <p:commandLink id="r-1" style="margin-right:5px;">
-                                    <h:outputText value="1"/>
-                                </p:commandLink>
-                                <p:commandLink id="r-1-5" style="margin-right:5px;">
-                                    <h:outputText value="1.5"/>
-                                </p:commandLink>
-                                <p:commandLink id="r-2" style="margin-right:5px;">
-                                    <h:outputText value="2"/>
-                                </p:commandLink>
-                                <p:commandLink id="r-2-5" style="margin-right:5px;">
-                                    <h:outputText value="2.5"/>
-                                </p:commandLink>
-                                <p:commandLink id="r-3">
-                                    <h:outputText value="3"/>
-                                </p:commandLink>
-                            </h:panelGrid>
+                        <h:outputLabel for="r-grid" value="R" styleClass="form-labels"/>
 
+                        <div id="r-grid" class="input-areas">
+
+                            <p:commandLink id="r-1" styleClass="command-link">
+                                <h:outputText value="1"/>
+                            </p:commandLink>
+                            <p:commandLink id="r-1-5" styleClass="command-link">
+                                <h:outputText value="1.5"/>
+                            </p:commandLink>
+                            <p:commandLink id="r-2" styleClass="command-link">
+                                <h:outputText value="2"/>
+                            </p:commandLink>
+                            <p:commandLink id="r-2-5" styleClass="command-link">
+                                <h:outputText value="2.5"/>
+                            </p:commandLink>
+                            <p:commandLink id="r-3">
+                                <h:outputText value="3"/>
+                            </p:commandLink>
                         </div>
 
-                        <div id="main-button-block">
-                            <h:commandButton styleClass="submit"
-                                             value="Submit"/>
-                            <h:commandButton styleClass="reset"
-                                             value="Reset"/>
-                            </div>
+                    </div>
 
-                    </h:form>
+                    <div id="main-button-block">
+                        <h:commandButton styleClass="submit"
+                                         value="Submit"/>
+                        <h:commandButton styleClass="reset"
+                                         value="Reset"/>
+                    </div>
 
-                </div>
-
-
-                <div id="message-block" class="content-plate">
-                    <span id="info-span">Oh shit here we go again...</span>
-                </div>
+                </h:form>
 
             </div>
 
-            <div id="right-area" class="floating-areas content-plate">
-                <div id="table-heading" class="coloured-block">
-                    <span>Table</span>
-                </div>
 
-                <div id="table-scroll-container">
-                    <table id="result-table">
-                        <thead>
-                        <tr id="table-header">
-                            <th class="coords-col">X</th>
-                            <th class="coords-col">Y</th>
-                            <th class="coords-col">R</th>
-                            <th class="hitres-col">Hit result</th>
-                        </tr>
-                        </thead>
-
-                    </table>
-                </div>
-
+            <div id="message-block" class="content-plate">
+                <span id="info-span">Oh shit here we go again...</span>
             </div>
 
-<!--        </div>-->
+        </div>
+
+        <div id="right-area" class="floating-areas content-plate">
+            <div id="table-heading" class="coloured-block">
+                <span>Table</span>
+            </div>
+
+            <div id="table-scroll-container">
+                <table id="result-table">
+                    <thead>
+                    <tr id="table-header">
+                        <th class="coords-col">X</th>
+                        <th class="coords-col">Y</th>
+                        <th class="coords-col">R</th>
+                        <th class="hitres-col">Hit result</th>
+                    </tr>
+                    </thead>
+
+                </table>
+            </div>
+
+        </div>
+
 
     </ui:define>
 
