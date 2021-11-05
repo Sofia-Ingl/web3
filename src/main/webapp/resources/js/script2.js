@@ -1,9 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function () {
 
     const MAX_X = 5;
     const MIN_X = -5;
     const MAX_Y = 3;
     const MIN_Y = -3;
+
+
+    let rValue;
+    let yValue;
 
     let dot = document.getElementById("dot");
     let prevPointColor = "black";
@@ -149,7 +153,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getR() {
-        let r = parseFloat(document.querySelector(".r-input-field").value);
+        //let r = parseFloat(document.querySelector('.hidden_r input[type="hidden"]').value);
+        //alert(document.querySelector('.hidden_r input[type="hidden"]').value);
+        let r = rValue;
         if (!isNaN(r) && r > 0) return r;
         return NaN;
     }
@@ -266,6 +272,17 @@ document.addEventListener('DOMContentLoaded', function () {
         let {x, y} = getXYCoordsFromAbsoluteOffset(dx, dy, r);
         //setGraphModeOnForm(x, y);
 
+        document.querySelector(".y-input-field").value = y;
+        yValue = y;
+        document.querySelector(".x-input-field").value = x;
+
+        let ySliderPercent = (y + 3) / 6 * 100;
+        ySliderPercent = (ySliderPercent < 0) ? 0 : ySliderPercent;
+        ySliderPercent = (ySliderPercent > 100) ? 100 : ySliderPercent;
+
+        document.querySelector(".ui-slider-range").setAttribute("style", "width:" + ySliderPercent + "%");
+        document.querySelector(".ui-slider-handle").setAttribute("style", "left:" + ySliderPercent + "%");
+
         // if (validateData()) {
         //     //sendRequestAndRenewDynamicParts();
         // }
@@ -292,19 +309,37 @@ document.addEventListener('DOMContentLoaded', function () {
     //     redrawDotsAfterRChanged();
     // });
     //
-    // document.querySelector("#x-input").addEventListener("keypress", function (event) {
-    //     let test = /[0-9.,\-+]/.test(event.key);
-    //     if (!test) {
-    //         event.preventDefault();
-    //     }
+    document.querySelector(".x-input-field").addEventListener("keypress", function (event) {
+        let test = /[0-9.,\-+]/.test(event.key);
+        if (!test) {
+            event.preventDefault();
+        }
+    });
+
+    document.querySelector(".x-input-field").addEventListener("input", function () {
+        drawDot(getX(), getY(), getR());
+    });
+
+
+    // document.querySelector(".ui-slider-handle").addEventListener("dragend", function () {
+    //     alert("WEE");
+    //     drawDot(getX(), getY(), getR());
+    // });
+
+    // document.querySelector(".r-input-field").addEventListener("change", function () {
+    //     drawDot(getX(), getY(), getR());
     // });
 
 
     document.querySelectorAll(".r-grid a").forEach(function (obj) {
         obj.addEventListener("click", function () {
 
-            document.querySelector(".r-input-field").value = this.innerText;
+            //document.querySelector(".r-input-field").value = this.innerText;
+            //$('.r-input-field').val(parseFloat(this.innerText));
+
+            rValue = parseFloat(this.innerText);
             let rVal = getR();
+
 
             document.querySelectorAll(".coor-text").forEach(function (text) {
 
@@ -324,6 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
                 text.innerHTML = Math.round(valInGraph * 100) / 100;
+
             });
 
 
@@ -340,11 +376,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // })
 
     document.querySelector(".main-button").addEventListener("click", function (event) {
-        event.preventDefault();
-        validateData();
-        // if (validateData()) {
-        //     //sendRequestAndRenewDynamicParts();
-        // }
+        if (validateData()) {
+
+            $('.hidden_r input[type="hidden"]').val(rValue);
+            yValue = parseFloat($('.y-input-field').val());
+            $('.hidden_y input[type="hidden"]').val(yValue);
+        }
+
     });
 
     // document.querySelector("button.reset").addEventListener("click", function (event) {

@@ -7,54 +7,82 @@ import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class EntryBeansContainer implements Serializable {
 
     private List<EntryBean> entryBeansContainer;
 
     private EntityManager entityManager;
-    private EntityTransaction transactions;
+    private EntityTransaction transaction;
 
 
     public EntryBeansContainer() {
+        System.out.println("Created!");
         entryBeansContainer = new ArrayList<>();
-        establishConnectionWithDB();
-        loadAllEntries();
+        //establishConnectionWithDB();
+        //loadAllEntries();
+        entryBeansContainer.add(new EntryBean());
+        //currentEntry = new EntryBean();
     }
 
     private void establishConnectionWithDB() {
         entityManager = Persistence.createEntityManagerFactory("persist").createEntityManager();
-        transactions = entityManager.getTransaction();
+        transaction = entityManager.getTransaction();
     }
 
     private void loadAllEntries() {
         try {
-            transactions.begin();
+            transaction.begin();
             Query query = entityManager.createQuery("SELECT e FROM EntryBean e");
             entryBeansContainer = query.getResultList();
-            transactions.commit();
+            transaction.commit();
         } catch (Exception e) {
-            if (transactions.isActive()) {
-                transactions.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
             }
             throw e;
         }
     }
 
-    public void addEntry(EntryBean entry) {
-        try {
-            transactions.begin();
-            entityManager.persist(entry);
-            transactions.commit();
-        } catch (Exception e) {
-            if (transactions.isActive()) {
-                transactions.rollback();
+    public void addEntry() {
+//        try {
+//            transaction.begin();
+            EntryBean currentEntry = entryBeansContainer.get(entryBeansContainer.size() - 1);
+            currentEntry.checkIfHit();
+            entryBeansContainer.add(new EntryBean());
+//            entityManager.persist(currentEntry);
+        System.out.println("LIST:");
+            for (EntryBean eb:
+                 entryBeansContainer) {
+                System.out.println(eb);
             }
-            throw e;
-        }
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction.isActive()) {
+//                transaction.rollback();
+//            }
+//            throw e;
+//        }
     }
 
+    public void clearEntries() {
+//        try {
+//            transaction.begin();
+//            Query query = entityManager.createQuery("DELETE FROM EntryBean");
+//            query.executeUpdate();
+            entryBeansContainer.clear();
+//            transaction.commit();
+//        } catch (RuntimeException exception) {
+//            if (transaction.isActive()) {
+//                transaction.rollback();
+//            }
+//            throw exception;
+//        }
+    }
+
+    public EntryBean getCurrentEntry() {
+        return entryBeansContainer.get(entryBeansContainer.size() - 1);
+    }
 
 
 //    public EntryBeansContainer(List<EntryBean> entryBeans) {

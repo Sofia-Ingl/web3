@@ -49,7 +49,7 @@ public class EntryBean implements Serializable {
     }
 
     private boolean rectangle() {
-        return x>=r && x<=0 && y>=r/2 && y<=0;
+        return x>=-r && x<=0 && y>=-r/2 && y<=0;
     }
 
     private boolean triangle() {
@@ -60,7 +60,7 @@ public class EntryBean implements Serializable {
         return x<=0 && y>=0 && (x*x + y*y <= r*r/4);
     }
 
-    private void checkIfHit() {
+    public void checkIfHit() {
         isHit = rectangle() || triangle() || circle();
     }
 
