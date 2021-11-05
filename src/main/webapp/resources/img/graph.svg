@@ -1,0 +1,43 @@
+<svg width="300" height="240" class="svg-graph" xmlns="http://www.w3.org/2000/svg">
+
+    <line class="axis" x1="0" x2="300" y1="120" y2="120" stroke="black"/>
+    <line class="axis" x1="150" x2="150" y1="0" y2="300" stroke="black"/>
+    <polygon points="150,0 144,15 156,15" stroke="black"/>
+    <polygon points="300,120 285,126 285,114" stroke="black"/>
+
+    <line class="coor-line" x1="200" x2="200" y1="115" y2="125" stroke="black"/>
+    <line class="coor-line" x1="250" x2="250" y1="115" y2="125" stroke="black"/>
+
+    <line class="coor-line" x1="50"  x2="50"  y1="115" y2="125" stroke="black"/>
+    <line class="coor-line" x1="100" x2="100" y1="115" y2="125" stroke="black"/>
+
+    <line class="coor-line" x1="145" x2="155" y1="20" y2="20" stroke="black"/>
+    <line class="coor-line" x1="145" x2="155" y1="70"  y2="70"  stroke="black"/>
+
+    <line class="coor-line" x1="145" x2="155" y1="170" y2="170" stroke="black"/>
+    <line class="coor-line" x1="145" x2="155" y1="220" y2="220" stroke="black"/>
+
+    <text class="coor-text" x="195" y="140">R/2</text>
+    <text class="coor-text" x="248" y="140">R</text>
+
+    <text class="coor-text" x="40" y="140">-R</text>
+    <text class="coor-text" x="90" y="140">-R/2</text>
+
+    <text class="coor-text" x="160" y="75">R/2</text>
+    <text class="coor-text" x="160" y="25">R</text>
+
+    <text class="coor-text" x="160" y="175">-R/2</text>
+    <text class="coor-text" x="160" y="225">-R</text>
+
+    <polygon class="svg-figure rectangle" points="150,170 150,120 50,120, 50,170"
+             fill="#ebe5d5" fill-opacity="0.5" stroke="#d49c6b"/>
+
+    <path  class="svg-figure circle" d="M 100 120 A 50 50 0 0 1 150 70 V 120 H 50"
+           fill="#ebe5d5" fill-opacity="0.5" stroke="#d49c6b"/>
+
+    <polygon class="svg-figure triangle" points="150,120 250,120 150,170"
+             fill="#ebe5d5" fill-opacity="0.5" stroke="#d49c6b"/>
+
+    <circle r="0" cx="150" cy="120" id="dot"/>
+
+</svg>

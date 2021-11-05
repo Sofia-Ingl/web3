@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="icon" href="#{resource['img/favicon.ico']}"/>
+    <h:outputStylesheet name="css/stylesheet.css"/>
+    <!--    <link rel="stylesheet" href="#{resource['css/stylesheet.css']}"/>-->
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif;display=swap" rel="stylesheet" type="text/css"/>
+    <ui:insert name="head">
+        <title>Web$3</title>
+    </ui:insert>
+</h:head>
+
+<h:body>
+    <div id="main-container">
+
+        <div id="head-area" class="coloured-block floating-areas">
+            <span class="left-aligned">Inglikova Sofya (P3233) #33546</span>
+            <h:link value="Go to index page..." outcome="index" class="right-aligned link"/>
+            <!--        <span class="right-aligned">go to index page...</span>-->
+        </div>
+        <ui:insert name="main-content">
+            Main content
+        </ui:insert>
+    </div>
+</h:body>
+</html>
