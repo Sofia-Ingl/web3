@@ -150,11 +150,12 @@ tr {
 
 #message-block {
     padding: 6px;
-    font-size: 13px;
+    font-size: 14px;
     text-align: left;
     font-weight: bold;
     width: 60%;
     opacity: 0;
+    margin-top: 20px;
 }
 
 .disappearing {

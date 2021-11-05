@@ -40,7 +40,7 @@
                     <div id="x-block">
                         <h:outputLabel for="x-field" value="X" styleClass="form-labels"/>
                         <div class="input-areas">
-                            <h:inputText id="x-field" styleClass="inner-input-field"
+                            <h:inputText id="x-field" styleClass="inner-input-field x-input-field"
                                          maxlength="8" autocomplete="off" a:placeholder="Number from -5 to 5">
                                 <f:validateRequired/>
                                 <f:validateDoubleRange minimum="-5" maximum="5"/>
@@ -51,11 +51,13 @@
                     <div id="y-block">
 
 
-                        <h:outputLabel for="slider-y" value="Y" styleClass="form-labels"/>
+                        <h:outputLabel for="y-field" value="Y" styleClass="form-labels"/>
                         <div class="input-areas">
-                            <h:inputText disabled="true" id="slider-y" styleClass="inner-input-field"/>
-                            <p:slider for="slider-y" minValue="-3" maxValue="3" step="0.5"
-                                      styleClass="inner-input-field" style="fill:black;"/>
+
+                            <p:slider for="y-field" minValue="-3" maxValue="3" step="0.5"
+                                      styleClass="inner-input-field"/>
+                            <h:inputText disabled="true" id="y-field" styleClass="inner-input-field y-input-field"/>
+
                         </div>
 
                     </div>
@@ -65,7 +67,7 @@
 
                         <h:outputLabel for="r-grid" value="R" styleClass="form-labels"/>
 
-                        <div id="r-grid" class="input-areas">
+                        <div id="r-grid" class="input-areas r-grid">
 
                             <p:commandLink id="r-1" styleClass="command-link">
                                 <h:outputText value="1"/>
@@ -84,12 +86,14 @@
                             </p:commandLink>
                         </div>
 
+                        <input type="hidden" class="r-input-field" value="0"/>
+
                     </div>
 
                     <div id="main-button-block">
-                        <h:commandButton styleClass="submit"
+                        <h:commandButton styleClass="submit main-button"
                                          value="Submit"/>
-                        <h:commandButton styleClass="reset"
+                        <h:commandButton styleClass="reset main-button"
                                          value="Reset"/>
                     </div>
 
@@ -126,6 +130,7 @@
         </div>
 
 
+        <h:outputScript name="js/script2.js"/>
     </ui:define>
 
 </ui:composition>
