@@ -66,6 +66,7 @@ public class EntryBeansContainer implements Serializable {
 //            transaction.begin();
 //            Query query = entityManager.createQuery("DELETE FROM EntryBean");
 //            query.executeUpdate();
+        System.out.println("Clear");
         entryBeansContainer.clear();
 //            transaction.commit();
 //        } catch (RuntimeException exception) {

@@ -14,6 +14,12 @@ $(document).ready(function () {
     let prevPointColor = "black";
     let curPointColor = "black";
 
+    const curPointFill = "#ffd200";
+    const prevPointFill = "#3a3e40"
+
+
+    let svg = document.getElementById("graph-svg");
+
     // function getXmlHttpReq() {
     //     let req = null;
     //     try {
@@ -124,7 +130,7 @@ $(document).ready(function () {
 
     function validateData() {
         let valid = validateX() && validateY() && validateR();
-        if (!valid) displayMessage("Data is invalid, please check restrictions (current X value is " + getX() + "; current Y value is " + getY() + "; current R value is " + getR()+ ")");
+        if (!valid) displayMessage("Data is invalid, please check restrictions (current X value is " + getX() + "; current Y value is " + getY() + "; current R value is " + getR() + ")");
         return validateX() && validateY() && validateR();
     }
 
@@ -216,16 +222,22 @@ $(document).ready(function () {
     function redrawDotsAfterRChanged() {
         document.querySelectorAll("circle.prev-dot").forEach(e => e.remove());
         let x, y, r, rNew, fill;
-        let svg = document.getElementById("graph-svg");
         document.querySelectorAll("#result-table tbody tr").forEach(function (row, index) {
             x = parseFloat(row.cells[0].innerText);
             y = parseFloat(row.cells[1].innerText);
             r = parseFloat(row.cells[2].innerText);
             rNew = getR();
-            fill = (r === rNew) ? "#ffd200" : "#3a3e40";
-            let {absoluteX, absoluteY} = getAbsoluteOffsetFromXYCoords(x, y, rNew);
-            svg.insertAdjacentHTML('beforeend', `<circle r="3" cx=${absoluteX} cy=${absoluteY} class="prev-dot" fill=${fill}></circle>`)
+            fill = (r === rNew) ? curPointFill : prevPointFill;
+            if (isNumber(rNew) && isNumber(x) && isNumber(y)) {
+                drawTableDot(x, y, rNew, fill);
+            }
         });
+    }
+
+    function drawTableDot(x, y, r, fill) {
+        let {absoluteX, absoluteY} = getAbsoluteOffsetFromXYCoords(x, y, r);
+        svg.insertAdjacentHTML('beforeend', `<circle r="3" cx=${absoluteX} cy=${absoluteY} class="prev-dot" fill=${fill}></circle>`)
+
     }
 
     //
@@ -287,9 +299,10 @@ $(document).ready(function () {
         if (validateData()) {
             prepareHiddenFields();
             document.querySelector(".main-button.submit").click();
+            //drawTableDot(xValue, yValue, rValue, curPointFill);
+            //redrawDotsAfterRChanged();
         }
     }
-
 
 
     document.querySelector(".main-button.reset").addEventListener("click", function () {
@@ -339,41 +352,71 @@ $(document).ready(function () {
 
             rValue = parseFloat(this.innerText);
 
+            changeROnAxes();
+            // document.querySelectorAll(".coor-text").forEach(function (text) {
+            //
+            //     let valInGraph;
+            //     let classList = text.classList;
+            //     if (classList.contains("neg")) {
+            //         if (classList.contains("div")) {
+            //             valInGraph = -rValue / 2;
+            //         } else {
+            //             valInGraph = -rValue;
+            //         }
+            //     } else {
+            //         if (classList.contains("div")) {
+            //             valInGraph = rValue / 2;
+            //         } else {
+            //             valInGraph = rValue;
+            //         }
+            //     }
+            //     text.innerHTML = Math.round(valInGraph * 100) / 100;
+            //
+            // });
 
-            document.querySelectorAll(".coor-text").forEach(function (text) {
-
-                let valInGraph;
-                let classList = text.classList;
-                if (classList.contains("neg")) {
-                    if (classList.contains("div")) {
-                        valInGraph = -rValue / 2;
-                    } else {
-                        valInGraph = -rValue;
-                    }
-                } else {
-                    if (classList.contains("div")) {
-                        valInGraph = rValue / 2;
-                    } else {
-                        valInGraph = rValue;
-                    }
-                }
-                text.innerHTML = Math.round(valInGraph * 100) / 100;
-
-            });
-
+            redrawDotsAfterRChanged();
+            drawDot(getX(), getY(), getR());
 
         })
     });
 
+    function changeROnAxes() {
+        document.querySelectorAll(".coor-text").forEach(function (text) {
 
-    function prepareHiddenFields() {
-        $('.hidden_r input[type="hidden"]').val(rValue);
-        yValue = parseFloat($('.y-input-field').val());
-        $('.hidden_y input[type="hidden"]').val(yValue);
-        xValue = parseFloat($('.x-input-field').val());
-        $('.hidden_x input[type="hidden"]').val(xValue);
+            let valInGraph;
+            let classList = text.classList;
+            if (classList.contains("neg")) {
+                if (classList.contains("div")) {
+                    valInGraph = -rValue / 2;
+                } else {
+                    valInGraph = -rValue;
+                }
+            } else {
+                if (classList.contains("div")) {
+                    valInGraph = rValue / 2;
+                } else {
+                    valInGraph = rValue;
+                }
+            }
+            text.innerHTML = Math.round(valInGraph * 100) / 100;
+
+        });
     }
 
+
+    function prepareHiddenFields() {
+        yValue = parseFloat($('.y-input-field').val());
+        xValue = parseFloat($('.x-input-field').val());
+        if (isNumber(rValue) && isNumber(yValue) && isNumber(xValue)) {
+            $('.hidden_r input[type="hidden"]').val(rValue);
+            $('.hidden_y input[type="hidden"]').val(yValue);
+            $('.hidden_x input[type="hidden"]').val(xValue);
+        } else {
+            $('.hidden_r input[type="hidden"]').val(null);
+            $('.hidden_y input[type="hidden"]').val(null);
+            $('.hidden_x input[type="hidden"]').val(null);
+        }
+    }
     document.querySelector(".main-button.submit").addEventListener("mousedown", function (event) {
         prepareHiddenFields();
     });
@@ -381,8 +424,24 @@ $(document).ready(function () {
     document.querySelector(".main-button.submit").addEventListener("click", function (event) {
         if (!validateData()) {
             event.preventDefault();
+        } else {
+            drawTableDot(getX(), getY(), getR(), curPointFill);
         }
     });
+
+    function restoreR() {
+        let table = document.getElementById("result-table");
+        let row = table.rows[table.rows.length - 1];
+        rValue = parseFloat(row.cells[2].innerText);
+        if (isNumber(rValue)&& rValue>0) {
+            changeROnAxes();
+            redrawDotsAfterRChanged();
+            drawDot(getX(), getY(), getR());
+        }
+    }
+
+
+    restoreR();
 
 
 });
