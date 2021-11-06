@@ -52,11 +52,6 @@ public class EntryBeansContainer implements Serializable {
         entryBeansContainer.add(currentEntry);
         currentEntry = new EntryBean();
 //            entityManager.persist(currentEntry);
-        System.out.println("LIST:");
-        for (EntryBean eb :
-                entryBeansContainer) {
-            System.out.println(eb);
-        }
 //            transaction.commit();
 //        } catch (Exception e) {
 //            if (transaction.isActive()) {
@@ -71,13 +66,7 @@ public class EntryBeansContainer implements Serializable {
 //            transaction.begin();
 //            Query query = entityManager.createQuery("DELETE FROM EntryBean");
 //            query.executeUpdate();
-        System.out.println("Clear");
         entryBeansContainer.clear();
-        System.out.println("LIST:");
-        for (EntryBean eb :
-                entryBeansContainer) {
-            System.out.println(eb);
-        }
 //            transaction.commit();
 //        } catch (RuntimeException exception) {
 //            if (transaction.isActive()) {

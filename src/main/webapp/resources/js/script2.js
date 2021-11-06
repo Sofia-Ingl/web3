@@ -124,7 +124,7 @@ $(document).ready(function () {
 
     function validateData() {
         let valid = validateX() && validateY() && validateR();
-        if (!valid) displayMessage("Data is invalid, please check restrictions (current Y value is " + getY() + ")");
+        if (!valid) displayMessage("Data is invalid, please check restrictions (current X value is " + getX() + "; current Y value is " + getY() + "; current R value is " + getR()+ ")");
         return validateX() && validateY() && validateR();
     }
 
@@ -284,8 +284,10 @@ $(document).ready(function () {
         document.querySelector(".ui-slider-range").setAttribute("style", "width:" + ySliderPercent + "%");
         document.querySelector(".ui-slider-handle").setAttribute("style", "left:" + ySliderPercent + "%");
 
-        prepareHiddenFields();
-        document.querySelector(".main-button.submit").click();
+        if (validateData()) {
+            prepareHiddenFields();
+            document.querySelector(".main-button.submit").click();
+        }
     }
 
 
@@ -373,10 +375,13 @@ $(document).ready(function () {
     }
 
     document.querySelector(".main-button.submit").addEventListener("mousedown", function (event) {
-        if (validateData()) {
-            prepareHiddenFields();
-        }
+        prepareHiddenFields();
+    });
 
+    document.querySelector(".main-button.submit").addEventListener("click", function (event) {
+        if (!validateData()) {
+            event.preventDefault();
+        }
     });
 
 
