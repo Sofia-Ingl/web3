@@ -306,6 +306,9 @@ $(document).ready(function () {
 
 
     document.querySelector(".main-button.reset").addEventListener("click", function () {
+        document.querySelectorAll("circle.prev-dot").forEach(function (obj) {
+            obj.remove();
+        });
         document.querySelector("#table-scroll-container tbody").innerHTML = "";
     });
 
