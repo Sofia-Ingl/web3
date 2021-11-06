@@ -5,7 +5,35 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+
+<ui:composition template="uitemplates/heading.xhtml">
+
+    <ui:define name="head">
+        <title>Web$3 #Index</title>
+    </ui:define>
+
+    <ui:define name="link">
+        <h:link value="Go to main page..." outcome="main" class="right-aligned link"/>
+    </ui:define>
+
+    <ui:define name="main-content">
+
+        <div id="ind-img-container">
+
+            <!-- <img src="C:\Users\Home\IdeaProjects\web3\src\main\webapp\resources\img\2.jpg" alt=""> -->
+
+            <div id="clock-container" class="coloured-block">
+            </div>
+
+
+        </div>
+
+    </ui:define>
+
+    <ui:define name="scripts">
+    </ui:define>
+
+</ui:composition>
 </html>
+
+

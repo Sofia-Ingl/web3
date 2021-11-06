@@ -20,8 +20,10 @@
 
         <div id="head-area" class="coloured-block floating-areas">
             <span class="left-aligned">Inglikova Sofya (P3233) #33546</span>
-            <h:link value="Go to index page..." outcome="index" class="right-aligned link"/>
-            <!--        <span class="right-aligned">go to index page...</span>-->
+            <ui:insert name="link">
+                Link
+            </ui:insert>
+
         </div>
         <ui:insert name="main-content">
             Main content

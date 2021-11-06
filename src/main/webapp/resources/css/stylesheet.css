@@ -195,3 +195,23 @@ tr {
 .command-link {
     margin-right: 20%;
 }
+
+
+
+
+#ind-img-container {
+    margin-left: 7%;
+
+    background-image: url(#{resource['img/7.jpg']});
+    background-color: #ebe5d5;
+    width: 1340px;
+    height: 600px;
+    display: inline-block;
+}
+
+#clock-container {
+    margin-top: 150px;
+    margin-left: 370px;
+    height: 300px;
+    width: 600px;
+}
