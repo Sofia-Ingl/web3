@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     let rValue;
     let yValue;
+    let xValue;
 
     let dot = document.getElementById("dot");
     let prevPointColor = "black";
@@ -338,7 +339,7 @@ $(document).ready(function () {
             //$('.r-input-field').val(parseFloat(this.innerText));
 
             rValue = parseFloat(this.innerText);
-            let rVal = getR();
+            //let rVal = getR();
 
 
             document.querySelectorAll(".coor-text").forEach(function (text) {
@@ -347,15 +348,15 @@ $(document).ready(function () {
                 let classList = text.classList;
                 if (classList.contains("neg")) {
                     if (classList.contains("div")) {
-                        valInGraph = -rVal / 2;
+                        valInGraph = -rValue / 2;
                     } else {
-                        valInGraph = -rVal;
+                        valInGraph = -rValue;
                     }
                 } else {
                     if (classList.contains("div")) {
-                        valInGraph = rVal / 2;
+                        valInGraph = rValue / 2;
                     } else {
-                        valInGraph = rVal;
+                        valInGraph = rValue;
                     }
                 }
                 text.innerHTML = Math.round(valInGraph * 100) / 100;
@@ -375,15 +376,18 @@ $(document).ready(function () {
     //     drawDot(getX(), getY(), getR());
     // })
 
-    document.querySelector(".main-button").addEventListener("click", function (event) {
+    document.querySelector(".main-button").addEventListener("mousedown", function (event) {
         if (validateData()) {
 
             $('.hidden_r input[type="hidden"]').val(rValue);
             yValue = parseFloat($('.y-input-field').val());
             $('.hidden_y input[type="hidden"]').val(yValue);
+            xValue = parseFloat($('.x-input-field').val());
+            $('.hidden_x input[type="hidden"]').val(xValue);
         }
 
     });
+
 
     // document.querySelector("button.reset").addEventListener("click", function (event) {
     //     event.preventDefault();

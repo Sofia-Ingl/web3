@@ -40,12 +40,20 @@
                     <div id="x-block">
                         <h:outputLabel for="x-field" value="X" styleClass="form-labels"/>
                         <div class="input-areas">
-                            <h:inputText id="x-field" styleClass="inner-input-field x-input-field" value="#{entries.currentEntry.x}"
+                            <h:inputText id="x-field" styleClass="inner-input-field x-input-field"
                                          maxlength="8" autocomplete="off" a:placeholder="Number from -5 to 5">
                                 <f:validateRequired/>
                                 <f:validateDoubleRange minimum="-5" maximum="5"/>
                             </h:inputText>
                         </div>
+
+                        <h:panelGroup styleClass="hidden_x">
+                            <h:inputHidden id="x-hidden" value="#{entries.currentEntry.x}">
+                                <f:validateRequired/>
+                                <f:validateLongRange minimum="-5" maximum="5"/>
+                            </h:inputHidden>
+                        </h:panelGroup>
+
                     </div>
 
                     <div id="y-block">
@@ -56,12 +64,12 @@
 
                             <p:slider for="y-field" minValue="-3" maxValue="3" step="0.5"
                                       styleClass="inner-input-field"/>
-                            <h:inputText disabled="true" id="y-field" styleClass="inner-input-field y-input-field" />
+                            <h:inputText disabled="true" id="y-field" styleClass="inner-input-field y-input-field"/>
 
                         </div>
 
                         <h:panelGroup styleClass="hidden_y">
-                            <h:inputHidden value="#{entries.currentEntry.y}">
+                            <h:inputHidden id="y-hidden" value="#{entries.currentEntry.y}">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="-3" maximum="3"/>
                             </h:inputHidden>
@@ -95,22 +103,26 @@
 
 
                         <h:panelGroup styleClass="hidden_r">
-                            <h:inputHidden value="#{entries.currentEntry.r}">
+                            <h:inputHidden id="r-hidden" value="#{entries.currentEntry.r}">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="3"/>
                             </h:inputHidden>
                         </h:panelGroup>
 
 
-<!--                        <input type="hidden" class="r-input-field" value="#{entries.currentEntry.r}" />-->
+                        <!--                        <input type="hidden" class="r-input-field" value="#{entries.currentEntry.r}" />-->
 
                     </div>
 
                     <div id="main-button-block">
                         <h:commandButton styleClass="submit main-button" action="#{entries.addEntry}"
-                                         value="Submit"/>
+                                         value="Submit">
+                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" immediate="true"/>
+                        </h:commandButton>
                         <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}"
-                                         value="Reset"/>
+                                         value="Reset">
+                            <f:ajax event="click" immediate="true"/>
+                        </h:commandButton>
                     </div>
 
                 </h:form>
@@ -144,8 +156,6 @@
             </div>
 
         </div>
-
-
 
 
     </ui:define>

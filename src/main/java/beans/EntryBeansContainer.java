@@ -11,6 +11,7 @@ import java.util.List;
 public class EntryBeansContainer implements Serializable {
 
     private List<EntryBean> entryBeansContainer;
+    private EntryBean currentEntry;
 
     private EntityManager entityManager;
     private EntityTransaction transaction;
@@ -21,8 +22,7 @@ public class EntryBeansContainer implements Serializable {
         entryBeansContainer = new ArrayList<>();
         //establishConnectionWithDB();
         //loadAllEntries();
-        entryBeansContainer.add(new EntryBean());
-        //currentEntry = new EntryBean();
+        currentEntry = new EntryBean();
     }
 
     private void establishConnectionWithDB() {
@@ -47,15 +47,16 @@ public class EntryBeansContainer implements Serializable {
     public void addEntry() {
 //        try {
 //            transaction.begin();
-            EntryBean currentEntry = entryBeansContainer.get(entryBeansContainer.size() - 1);
-            currentEntry.checkIfHit();
-            entryBeansContainer.add(new EntryBean());
+        System.out.println("Add");
+        currentEntry.checkIfHit();
+        entryBeansContainer.add(currentEntry);
+        currentEntry = new EntryBean();
 //            entityManager.persist(currentEntry);
         System.out.println("LIST:");
-            for (EntryBean eb:
-                 entryBeansContainer) {
-                System.out.println(eb);
-            }
+        for (EntryBean eb :
+                entryBeansContainer) {
+            System.out.println(eb);
+        }
 //            transaction.commit();
 //        } catch (Exception e) {
 //            if (transaction.isActive()) {
@@ -70,7 +71,13 @@ public class EntryBeansContainer implements Serializable {
 //            transaction.begin();
 //            Query query = entityManager.createQuery("DELETE FROM EntryBean");
 //            query.executeUpdate();
-            entryBeansContainer.clear();
+        System.out.println("Clear");
+        entryBeansContainer.clear();
+        System.out.println("LIST:");
+        for (EntryBean eb :
+                entryBeansContainer) {
+            System.out.println(eb);
+        }
 //            transaction.commit();
 //        } catch (RuntimeException exception) {
 //            if (transaction.isActive()) {
@@ -81,7 +88,7 @@ public class EntryBeansContainer implements Serializable {
     }
 
     public EntryBean getCurrentEntry() {
-        return entryBeansContainer.get(entryBeansContainer.size() - 1);
+        return currentEntry;
     }
 
 
