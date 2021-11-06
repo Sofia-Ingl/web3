@@ -288,12 +288,13 @@ $(document).ready(function () {
         document.querySelector(".main-button.submit").click();
     }
 
-    //
-    //
-    // document.querySelector("button.reset").addEventListener("click", function () {
-    //     document.querySelector(".clear_info").value = "true";
-    // });
-    //
+
+
+    document.querySelector(".main-button.reset").addEventListener("click", function () {
+        document.querySelector("#table-scroll-container tbody").innerHTML = "";
+    });
+
+
     document.querySelector(".svg-graph").addEventListener("click", graphListener);
     //
     // function addTableRowEventListeners() {

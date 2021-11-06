@@ -117,9 +117,9 @@
                     <div id="main-button-block">
                         <h:commandButton styleClass="submit main-button" action="#{entries.addEntry}"
                                          value="Submit">
-                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" immediate="true"/>
+                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" render="result-table" immediate="true"/>
                         </h:commandButton>
-                        <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}"
+                        <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}" render="result-table"
                                          value="Reset">
                             <f:ajax event="click" immediate="true"/>
                         </h:commandButton>
@@ -142,17 +142,35 @@
             </div>
 
             <div id="table-scroll-container">
-                <table id="result-table">
-                    <thead>
-                    <tr id="table-header">
-                        <th class="coords-col">X</th>
-                        <th class="coords-col">Y</th>
-                        <th class="coords-col">R</th>
-                        <th class="hitres-col">Hit result</th>
-                    </tr>
-                    </thead>
+<!--                <table id="result-table">-->
+<!--                    <thead>-->
+<!--                    <tr id="table-header">-->
+<!--                        <th class="coords-col">X</th>-->
+<!--                        <th class="coords-col">Y</th>-->
+<!--                        <th class="coords-col">R</th>-->
+<!--                        <th class="hitres-col">Hit result</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
 
-                </table>
+<!--                </table>-->
+                <h:dataTable id="result-table" styleClass="result-table" value="#{entries.entryBeansContainer}" var="row">
+                    <h:column headerClass="coords-col">
+                        <f:facet name="header">X</f:facet>
+                        <h:outputText value="#{row.x}"/>
+                    </h:column>
+                    <h:column headerClass="coords-col">
+                        <f:facet name="header">Y</f:facet>
+                        <h:outputText value="#{row.y}"/>
+                    </h:column>
+                    <h:column headerClass="coords-col">
+                        <f:facet name="header">R</f:facet>
+                        <h:outputText value="#{row.r}"/>
+                    </h:column>
+                    <h:column headerClass="hitres-col">
+                        <f:facet name="header">Hit result</f:facet>
+                        <h:outputText value="#{row.hit}"/>
+                    </h:column>
+                </h:dataTable>
             </div>
 
         </div>
