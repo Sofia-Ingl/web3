@@ -284,9 +284,8 @@ $(document).ready(function () {
         document.querySelector(".ui-slider-range").setAttribute("style", "width:" + ySliderPercent + "%");
         document.querySelector(".ui-slider-handle").setAttribute("style", "left:" + ySliderPercent + "%");
 
-        // if (validateData()) {
-        //     //sendRequestAndRenewDynamicParts();
-        // }
+        prepareHiddenFields();
+        document.querySelector(".main-button.submit").click();
     }
 
     //
@@ -335,11 +334,7 @@ $(document).ready(function () {
     document.querySelectorAll(".r-grid a").forEach(function (obj) {
         obj.addEventListener("click", function () {
 
-            //document.querySelector(".r-input-field").value = this.innerText;
-            //$('.r-input-field').val(parseFloat(this.innerText));
-
             rValue = parseFloat(this.innerText);
-            //let rVal = getR();
 
 
             document.querySelectorAll(".coor-text").forEach(function (text) {
@@ -367,32 +362,21 @@ $(document).ready(function () {
         })
     });
 
-    // document.querySelector("#x-input").addEventListener("input", function () {
-    //     drawDot(getX(), getY(), getR());
-    // });
-    //
-    // document.querySelector("#yradio").addEventListener("change", function () {
-    //     setInputModeOnForm();
-    //     drawDot(getX(), getY(), getR());
-    // })
 
-    document.querySelector(".main-button").addEventListener("mousedown", function (event) {
+    function prepareHiddenFields() {
+        $('.hidden_r input[type="hidden"]').val(rValue);
+        yValue = parseFloat($('.y-input-field').val());
+        $('.hidden_y input[type="hidden"]').val(yValue);
+        xValue = parseFloat($('.x-input-field').val());
+        $('.hidden_x input[type="hidden"]').val(xValue);
+    }
+
+    document.querySelector(".main-button.submit").addEventListener("mousedown", function (event) {
         if (validateData()) {
-
-            $('.hidden_r input[type="hidden"]').val(rValue);
-            yValue = parseFloat($('.y-input-field').val());
-            $('.hidden_y input[type="hidden"]').val(yValue);
-            xValue = parseFloat($('.x-input-field').val());
-            $('.hidden_x input[type="hidden"]').val(xValue);
+            prepareHiddenFields();
         }
 
     });
-
-
-    // document.querySelector("button.reset").addEventListener("click", function (event) {
-    //     event.preventDefault();
-    //     //sendClearHttpRequest();
-    // });
 
 
 });
