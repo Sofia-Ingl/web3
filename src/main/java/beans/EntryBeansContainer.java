@@ -20,8 +20,8 @@ public class EntryBeansContainer implements Serializable {
     public EntryBeansContainer() {
         System.out.println("Created!");
         entryBeansContainer = new ArrayList<>();
-        //establishConnectionWithDB();
-        //loadAllEntries();
+        establishConnectionWithDB();
+        loadAllEntries();
         currentEntry = new EntryBean();
     }
 
@@ -45,36 +45,36 @@ public class EntryBeansContainer implements Serializable {
     }
 
     public void addEntry() {
-//        try {
-//            transaction.begin();
-        System.out.println("Add");
-        currentEntry.checkIfHit();
-        entryBeansContainer.add(currentEntry);
-        currentEntry = new EntryBean();
-//            entityManager.persist(currentEntry);
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (transaction.isActive()) {
-//                transaction.rollback();
-//            }
-//            throw e;
-//        }
+        try {
+            transaction.begin();
+            System.out.println("Add");
+            currentEntry.checkIfHit();
+            entryBeansContainer.add(currentEntry);
+            entityManager.persist(currentEntry);
+            transaction.commit();
+            currentEntry = new EntryBean();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
+        }
     }
 
     public void clearEntries() {
-//        try {
-//            transaction.begin();
-//            Query query = entityManager.createQuery("DELETE FROM EntryBean");
-//            query.executeUpdate();
-        System.out.println("Clear");
-        entryBeansContainer.clear();
-//            transaction.commit();
-//        } catch (RuntimeException exception) {
-//            if (transaction.isActive()) {
-//                transaction.rollback();
-//            }
-//            throw exception;
-//        }
+        try {
+            transaction.begin();
+            Query query = entityManager.createQuery("DELETE FROM EntryBean");
+            query.executeUpdate();
+            System.out.println("Clear");
+            entryBeansContainer.clear();
+            transaction.commit();
+        } catch (RuntimeException exception) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
+        }
     }
 
     public EntryBean getCurrentEntry() {
