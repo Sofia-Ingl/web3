@@ -12,6 +12,12 @@
 
     <ui:define name="head">
         <title>Web$3 #Main</title>
+<!--        <script type="text/javascript">-->
+<!--            function callB(data) {-->
+<!--                alert(data.status==='success');-->
+<!--            }-->
+<!--        </script>-->
+<!--        <h:outputScript name="js/func.js"/>-->
     </ui:define>
 
     <ui:define name="link">
@@ -121,7 +127,7 @@
                     <div id="main-button-block">
                         <h:commandButton styleClass="submit main-button" action="#{entries.addEntry}"
                                          value="Submit">
-                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" render="result-table"/>
+                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" render="result-table" />
                         </h:commandButton>
                         <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}" render="result-table"
                                          value="Reset">
@@ -170,10 +176,15 @@
                         <f:facet name="header">R</f:facet>
                         <h:outputText value="#{row.r}"/>
                     </h:column>
+                    <h:column headerClass="time-col">
+                        <f:facet name="header">Current time</f:facet>
+                        <h:outputText value="#{row.currentTime}"/>
+                    </h:column>
                     <h:column headerClass="hitres-col">
                         <f:facet name="header">Hit result</f:facet>
                         <h:outputText value="#{row.hit}"/>
                     </h:column>
+
                 </h:dataTable>
             </div>
 
@@ -184,6 +195,7 @@
 
     <ui:define name="scripts">
         <h:outputScript name="js/script2.js"/>
+<!--        <h:outputScript name="js/prep.js"/>-->
     </ui:define>
 
 </ui:composition>

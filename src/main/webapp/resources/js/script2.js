@@ -15,10 +15,28 @@ $(document).ready(function () {
     let curPointColor = "black";
 
     const curPointFill = "#ffd200";
+    const curPointsFillHit = 'red';
     const prevPointFill = "#3a3e40"
 
 
     let svg = document.getElementById("graph-svg");
+
+
+    function rectangle(x, y, r) {
+        return x>=-r && x<=0 && y>=-r/2 && y<=0;
+    }
+
+    function triangle(x, y, r) {
+        return x>=0 && y<=0 && y>=x/2 - r/2;
+    }
+
+    function circle(x, y, r) {
+        return x<=0 && y>=0 && (x*x + y*y <= r*r/4);
+    }
+
+    function checkIfHit(x, y, r) {
+        return rectangle(x, y, r) || triangle(x, y, r) || circle(x, y, r);
+    }
 
     // function getXmlHttpReq() {
     //     let req = null;
@@ -221,13 +239,18 @@ $(document).ready(function () {
     //
     function redrawDotsAfterRChanged() {
         document.querySelectorAll("circle.prev-dot").forEach(e => e.remove());
-        let x, y, r, rNew, fill;
+        let x, y, r, rNew, fill, hit;
         document.querySelectorAll("#result-table tbody tr").forEach(function (row, index) {
             x = parseFloat(row.cells[0].innerText);
             y = parseFloat(row.cells[1].innerText);
             r = parseFloat(row.cells[2].innerText);
+            hit = row.cells[3].innerText;
             rNew = getR();
-            fill = (r === rNew) ? curPointFill : prevPointFill;
+            if (r === rNew) {
+                fill = (hit === 'true') ? curPointsFillHit : curPointFill;
+            } else {
+                fill = prevPointFill;
+            }
             if (isNumber(rNew) && isNumber(x) && isNumber(y)) {
                 drawTableDot(x, y, rNew, fill);
             }
@@ -428,7 +451,13 @@ $(document).ready(function () {
         if (!validateData()) {
             event.preventDefault();
         } else {
-            drawTableDot(getX(), getY(), getR(), curPointFill);
+            // ЦВЕТАААААААААААААА
+            let x, y, r;
+            x = getX();
+            y = getY();
+            r = getR();
+            let fill = (checkIfHit(x, y, r)) ? curPointsFillHit : curPointFill;
+            drawTableDot(x, y, r, fill);
         }
     });
 
@@ -442,6 +471,18 @@ $(document).ready(function () {
             drawDot(getX(), getY(), getR());
         }
     }
+    
+    // function submitEventHandler(data) {
+    //     let status = data.status;
+    //     if (status === "success") {
+    //         let x, y, r;
+    //         x = getX();
+    //         y = getY();
+    //         r = getR();
+    //         let fill = (checkIfHit(x, y, r)) ? curPointsFillHit : curPointFill;
+    //         drawTableDot(x, y, r, fill);
+    //     }
+    // }
 
 
     restoreR();

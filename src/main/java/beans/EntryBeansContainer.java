@@ -1,24 +1,28 @@
 package beans;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.annotation.PreDestroy;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntryBeansContainer implements Serializable {
 
+    private final DateTimeFormatter formatter;
+
     private List<EntryBean> entryBeansContainer;
     private EntryBean currentEntry;
 
+    private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
     private EntityTransaction transaction;
 
 
     public EntryBeansContainer() {
         System.out.println("Created!");
+        formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
         entryBeansContainer = new ArrayList<>();
         establishConnectionWithDB();
         loadAllEntries();
@@ -26,8 +30,10 @@ public class EntryBeansContainer implements Serializable {
     }
 
     private void establishConnectionWithDB() {
-        entityManager = Persistence.createEntityManagerFactory("persist").createEntityManager();
+        entityManagerFactory = Persistence.createEntityManagerFactory("persist");
+        entityManager = entityManagerFactory.createEntityManager();
         transaction = entityManager.getTransaction();
+        System.out.println("connected");
     }
 
     private void loadAllEntries() {
@@ -49,7 +55,11 @@ public class EntryBeansContainer implements Serializable {
             transaction.begin();
             System.out.println("Add");
             currentEntry.checkIfHit();
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String time = localDateTime.format(formatter);
+            currentEntry.setCurrentTime(time);
             entryBeansContainer.add(currentEntry);
+            System.out.println(currentEntry);
             entityManager.persist(currentEntry);
             transaction.commit();
             currentEntry = new EntryBean();
@@ -82,16 +92,14 @@ public class EntryBeansContainer implements Serializable {
     }
 
 
-//    public EntryBeansContainer(List<EntryBean> entryBeans) {
-//        this.entryBeansContainer = entryBeans;
-//    }
-
     public List<EntryBean> getEntryBeansContainer() {
         return entryBeansContainer;
     }
 
-//    public void setEntryBeansContainer(List<EntryBean> entryBeansContainer) {
-//        this.entryBeansContainer = entryBeansContainer;
-//    }
+    @PreDestroy
+    public void close() {
+        if (entityManager.isOpen()) entityManager.close();
+        if (entityManagerFactory.isOpen()) entityManagerFactory.close();
+    }
 
 }

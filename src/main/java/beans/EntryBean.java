@@ -8,14 +8,13 @@ import java.util.Objects;
 public class EntryBean implements Serializable {
 
     @Id
-    //@SequenceGenerator(name = "jpaSequence", sequenceName = "JPA_SEQUENCE", allocationSize = 1)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private double x;
     private double y;
     private double r;
+    private String currentTime;
     private boolean isHit;
 
     public EntryBean() {
@@ -80,12 +79,21 @@ public class EntryBean implements Serializable {
         this.y = y;
     }
 
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
     @Override
     public String toString() {
         return "EntryBean{" +
                 "x=" + x +
                 ", y=" + y +
                 ", r=" + r +
+                ", currentTime=" + currentTime +
                 ", isHit=" + isHit +
                 '}';
     }
