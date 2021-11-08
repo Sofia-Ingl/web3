@@ -38,87 +38,6 @@ $(document).ready(function () {
         return rectangle(x, y, r) || triangle(x, y, r) || circle(x, y, r);
     }
 
-    // function getXmlHttpReq() {
-    //     let req = null;
-    //     try {
-    //
-    //         if (window.XMLHttpRequest) {
-    //             req = new XMLHttpRequest();
-    //         } else {
-    //             if (window.ActiveXObject) {
-    //                 try {
-    //                     req = new ActiveXObject("Msxml2.XMLHTTP");
-    //                 } catch (e) {
-    //                     req = new ActiveXObject("Microsoft.XMLHTTP");
-    //                 }
-    //             }
-    //         }
-    //
-    //     } catch (ex) {
-    //     }
-    //     return req;
-    // }
-    //
-    //
-    // function sendRequestAndRenewDynamicParts() {
-    //     let req = getXmlHttpReq();
-    //
-    //     let x = getX();
-    //     let y = getY();
-    //     let r = getR();
-    //     let svg = document.getElementById("graph-svg");
-    //     let url = 'controller?' + 'x=' + x.toString() +
-    //         '&y=' + y.toString() +
-    //         '&r=' + r.toString() +
-    //         '&graph=' + document.querySelector(".graph_point_info").value +
-    //         '&graphY=' + y.toString() +
-    //         '&table=true';
-    //
-    //     req.open("GET", url, true);
-    //
-    //     req.setRequestHeader("X-Inc-Counter", r.toString());
-    //
-    //     req.addEventListener("readystatechange", () => {
-    //         try {
-    //             if (req.readyState === 4 && req.status === 200) {
-    //
-    //                 document.getElementById("table-scroll-container").innerHTML = req.response;
-    //                 let {absoluteX, absoluteY} = getAbsoluteOffsetFromXYCoords(x, y, r);
-    //                 addTableRowEventListeners();
-    //                 redrawDotsAfterRChanged();
-    //
-    //             }
-    //         } catch (e) {
-    //             alert("Error occurred: " + e);
-    //         }
-    //     });
-    //     req.send();
-    // }
-    //
-    //
-    // function sendClearHttpRequest() {
-    //     let paramString = 'clear=true';
-    //     let req = getXmlHttpReq();
-    //     let url = 'controller?' + paramString;
-    //     req.open("GET", url, true);
-    //
-    //     req.addEventListener("readystatechange", () => {
-    //         try {
-    //             if (req.readyState === 4 && req.status === 200) {
-    //
-    //                 document.querySelectorAll("circle.prev-dot").forEach(function (obj) {
-    //                     obj.remove();
-    //                 });
-    //                 document.getElementById("table-scroll-container").innerHTML = "";
-    //
-    //             }
-    //         } catch (e) {
-    //             alert("Error occurred: " + e);
-    //         }
-    //     });
-    //     req.send();
-    // }
-
 
     function isNumber(number) {
         return !isNaN(number) && isFinite(number);
@@ -178,8 +97,6 @@ $(document).ready(function () {
     }
 
     function getR() {
-        //let r = parseFloat(document.querySelector('.hidden_r input[type="hidden"]').value);
-        //alert(document.querySelector('.hidden_r input[type="hidden"]').value);
         let r = rValue;
         if (!isNaN(r) && r > 0) return r;
         return NaN;
@@ -202,19 +119,6 @@ $(document).ready(function () {
         dot.setAttribute("cy", absoluteY);
     }
 
-    // function setGraphModeOnForm(x, y) {
-    //     document.querySelector(".graph_point_info").value = "true";
-    //     if (document.querySelector("input[type='radio']:checked") != null) {
-    //         document.querySelector("input[type='radio']:checked").checked = false;
-    //     }
-    //     document.querySelector("#graph-y").value = y;
-    //     document.querySelector("#x-input").value = x;
-    // }
-    //
-    // function setInputModeOnForm() {
-    //     document.querySelector(".graph_point_info").value = "false";
-    // }
-    //
     function getXYCoordsFromAbsoluteOffset(absoluteXOffset, absoluteYOffset, r) {
         const CENTER_X = 150;
         const CENTER_Y = 120;
@@ -224,7 +128,7 @@ $(document).ready(function () {
         }
     }
 
-    //
+
     function getAbsoluteOffsetFromXYCoords(x, y, r) {
         const CENTER_X = 150;
         const CENTER_Y = 120;
@@ -236,7 +140,7 @@ $(document).ready(function () {
         }
     }
 
-    //
+
     function redrawDotsAfterRChanged() {
         document.querySelectorAll("circle.prev-dot").forEach(e => e.remove());
         let x, y, r, rNew, fill, hit;
@@ -244,7 +148,7 @@ $(document).ready(function () {
             x = parseFloat(row.cells[0].innerText);
             y = parseFloat(row.cells[1].innerText);
             r = parseFloat(row.cells[2].innerText);
-            hit = row.cells[3].innerText;
+            hit = row.cells[4].innerText;
             rNew = getR();
             if (r === rNew) {
                 fill = (hit === 'true') ? curPointsFillHit : curPointFill;
@@ -263,7 +167,7 @@ $(document).ready(function () {
 
     }
 
-    //
+
     function displayMessage(message) {
         document.getElementById("message-block").classList.remove("disappearing");
         setTimeout(() => document.getElementById("message-block").classList.add("disappearing"), 0);
@@ -377,29 +281,7 @@ $(document).ready(function () {
         obj.addEventListener("click", function () {
 
             rValue = parseFloat(this.innerText);
-
             changeROnAxes();
-            // document.querySelectorAll(".coor-text").forEach(function (text) {
-            //
-            //     let valInGraph;
-            //     let classList = text.classList;
-            //     if (classList.contains("neg")) {
-            //         if (classList.contains("div")) {
-            //             valInGraph = -rValue / 2;
-            //         } else {
-            //             valInGraph = -rValue;
-            //         }
-            //     } else {
-            //         if (classList.contains("div")) {
-            //             valInGraph = rValue / 2;
-            //         } else {
-            //             valInGraph = rValue;
-            //         }
-            //     }
-            //     text.innerHTML = Math.round(valInGraph * 100) / 100;
-            //
-            // });
-
             redrawDotsAfterRChanged();
             drawDot(getX(), getY(), getR());
 
@@ -451,7 +333,6 @@ $(document).ready(function () {
         if (!validateData()) {
             event.preventDefault();
         } else {
-            // ЦВЕТАААААААААААААА
             let x, y, r;
             x = getX();
             y = getY();
@@ -471,19 +352,6 @@ $(document).ready(function () {
             drawDot(getX(), getY(), getR());
         }
     }
-    
-    // function submitEventHandler(data) {
-    //     let status = data.status;
-    //     if (status === "success") {
-    //         let x, y, r;
-    //         x = getX();
-    //         y = getY();
-    //         r = getR();
-    //         let fill = (checkIfHit(x, y, r)) ? curPointsFillHit : curPointFill;
-    //         drawTableDot(x, y, r, fill);
-    //     }
-    // }
-
 
     restoreR();
 

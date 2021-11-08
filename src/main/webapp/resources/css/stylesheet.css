@@ -32,7 +32,7 @@ tr {
     color: #f6fafb;
 }
 
-.coloured-block > span {
+.coloured-block > span, #clock-container p {
     color: #f6fafb;
 }
 
@@ -201,10 +201,9 @@ tr {
 
 #ind-img-container {
     margin-left: 7%;
-
     background-image: url(#{resource['img/7.jpg']});
     background-color: #ebe5d5;
-    width: 1340px;
+    width: 1338px;
     height: 600px;
     display: inline-block;
 }
@@ -214,4 +213,9 @@ tr {
     margin-left: 370px;
     height: 300px;
     width: 600px;
+}
+
+
+#clock-container .huge-text {
+    font-size: 60px;
 }
