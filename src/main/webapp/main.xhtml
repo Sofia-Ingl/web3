@@ -12,10 +12,7 @@
 
     <ui:define name="head">
         <title>Web$3 #Main</title>
-<!--            function callB(data) {-->
-<!--                alert(data.status==='success');-->
-<!--            }-->
-<!--        </script>-->
+        <h:outputScript name="js/script2.js"/>
     </ui:define>
 
     <ui:define name="link">
@@ -71,7 +68,7 @@
                         <div class="input-areas">
 
                             <p:slider for="y-field" minValue="-3" maxValue="3" step="0.5"
-                                      styleClass="inner-input-field"/>
+                                      styleClass="inner-input-field" onSlideEnd="document.querySelector('.hidden_button_refresh_graph input').click();"/>
                             <h:inputText disabled="true" id="y-field" styleClass="inner-input-field y-input-field"/>
 
                         </div>
@@ -81,6 +78,10 @@
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="-3" maximum="3"/>
                             </h:inputHidden>
+                        </h:panelGroup>
+
+                        <h:panelGroup styleClass="hidden_button_refresh_graph">
+                            <h:inputHidden id="refresh_graph"/>
                         </h:panelGroup>
 
                     </div>
@@ -150,17 +151,6 @@
             </div>
 
             <div id="table-scroll-container">
-<!--                <table id="result-table">-->
-<!--                    <thead>-->
-<!--                    <tr id="table-header">-->
-<!--                        <th class="coords-col">X</th>-->
-<!--                        <th class="coords-col">Y</th>-->
-<!--                        <th class="coords-col">R</th>-->
-<!--                        <th class="hitres-col">Hit result</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-
-<!--                </table>-->
                 <h:dataTable id="result-table" styleClass="result-table" value="#{entries.entryBeansContainer}" var="row">
                     <h:column headerClass="coords-col">
                         <f:facet name="header">X</f:facet>
@@ -192,7 +182,7 @@
     </ui:define>
 
     <ui:define name="scripts">
-        <h:outputScript name="js/script2.js"/>
+<!--        <h:outputScript name="js/script2.js"/>-->
 
 <!--        <h:outputScript name="js/prep.js"/>-->
     </ui:define>

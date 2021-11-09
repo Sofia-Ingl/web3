@@ -23,15 +23,15 @@ $(document).ready(function () {
 
 
     function rectangle(x, y, r) {
-        return x>=-r && x<=0 && y>=-r/2 && y<=0;
+        return x >= -r && x <= 0 && y >= -r / 2 && y <= 0;
     }
 
     function triangle(x, y, r) {
-        return x>=0 && y<=0 && y>=x/2 - r/2;
+        return x >= 0 && y <= 0 && y >= x / 2 - r / 2;
     }
 
     function circle(x, y, r) {
-        return x<=0 && y>=0 && (x*x + y*y <= r*r/4);
+        return x <= 0 && y >= 0 && (x * x + y * y <= r * r / 4);
     }
 
     function checkIfHit(x, y, r) {
@@ -325,6 +325,7 @@ $(document).ready(function () {
             $('.hidden_x input[type="hidden"]').val(null);
         }
     }
+
     document.querySelector(".main-button.submit").addEventListener("mousedown", function (event) {
         prepareHiddenFields();
     });
@@ -346,12 +347,17 @@ $(document).ready(function () {
         let table = document.getElementById("result-table");
         let row = table.rows[table.rows.length - 1];
         rValue = parseFloat(row.cells[2].innerText);
-        if (isNumber(rValue)&& rValue>0) {
+        if (isNumber(rValue) && rValue > 0) {
             changeROnAxes();
             redrawDotsAfterRChanged();
             drawDot(getX(), getY(), getR());
         }
     }
+
+    document.querySelector('.hidden_button_refresh_graph input').addEventListener("click",
+        function () {
+            drawDot(getX(), getY(), getR());
+        });
 
     restoreR();
 
