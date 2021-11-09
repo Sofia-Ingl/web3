@@ -1,14 +1,7 @@
 $(document).ready(function () {
 
     const container = document.getElementById("clock-container");
-
-    // let curr = new Date();
-    // //container.innerHTML = `<span>${curr.getHours()}:${curr.getMinutes()}:${curr.getSeconds()}</span>`;
-    // let timeStr = `<span>${curr.toTimeString()}</span>`;
     const re = /[0-9]{2}:[0-9]{2}:[0-9]{2}/;
-    // let ind = timeStr.search(re);
-    // let date = `<span>${curr.toDateString()}</span>`
-
 
     function updateTime() {
         let curr = new Date();

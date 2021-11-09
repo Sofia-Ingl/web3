@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,9 +10,9 @@ import java.util.Objects;
 public class EntryBean implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "entrySequence", sequenceName = "ENTRY_SEQUENCE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entrySequence")
     private int id;
-
     private double x;
     private double y;
     private double r;
