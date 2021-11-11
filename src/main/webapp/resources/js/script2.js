@@ -17,6 +17,7 @@ $(document).ready(function () {
     const curPointFill = "#ffd200";
     const curPointsFillHit = 'red';
     const prevPointFill = "#3a3e40"
+    const prevPointFillHit = "#D774F0";
 
 
     let svg = document.getElementById("graph-svg");
@@ -153,7 +154,7 @@ $(document).ready(function () {
             if (r === rNew) {
                 fill = (hit === 'true') ? curPointsFillHit : curPointFill;
             } else {
-                fill = prevPointFill;
+                fill = (hit === 'true') ? prevPointFillHit : prevPointFill;
             }
             if (isNumber(rNew) && isNumber(x) && isNumber(y)) {
                 drawTableDot(x, y, rNew, fill);

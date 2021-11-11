@@ -29,14 +29,14 @@ public class EntryBeansContainer implements Serializable {
         currentEntry = new EntryBean();
     }
 
-    private void establishConnectionWithDB() {
+    synchronized private void establishConnectionWithDB() {
         entityManagerFactory = Persistence.createEntityManagerFactory("persist");
         entityManager = entityManagerFactory.createEntityManager();
         transaction = entityManager.getTransaction();
         System.out.println("connected");
     }
 
-    private void loadAllEntries() {
+    synchronized private void loadAllEntries() {
         try {
             transaction.begin();
             Query query = entityManager.createQuery("SELECT e FROM EntryBean e");
@@ -50,7 +50,7 @@ public class EntryBeansContainer implements Serializable {
         }
     }
 
-    public void addEntry() {
+    synchronized public void addEntry() {
         try {
             transaction.begin();
             System.out.println("Add");
@@ -71,7 +71,7 @@ public class EntryBeansContainer implements Serializable {
         }
     }
 
-    public void clearEntries() {
+    synchronized public void clearEntries() {
         try {
             transaction.begin();
             Query query = entityManager.createQuery("DELETE FROM EntryBean");
