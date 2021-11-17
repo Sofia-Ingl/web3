@@ -68,7 +68,7 @@ $(document).ready(function () {
 
     function validateData() {
         let valid = validateX() && validateY() && validateR();
-        if (!valid) displayMessage("Data is invalid, please check restrictions (current X value is " + getX() + "; current Y value is " + getY() + "; current R value is " + getR() + ")");
+        //if (!valid) displayMessage("Data is invalid, please check restrictions (current X value is " + getX() + "; current Y value is " + getY() + "; current R value is " + getR() + ")");
         return validateX() && validateY() && validateR();
     }
 
@@ -172,8 +172,18 @@ $(document).ready(function () {
     function displayMessage(message) {
         document.getElementById("message-block").classList.remove("disappearing");
         setTimeout(() => document.getElementById("message-block").classList.add("disappearing"), 0);
+        document.querySelectorAll("#messages-plate span").forEach(function (elem) {
+            elem.innerHTML = "";
+        });
         document.getElementById("info-span").innerHTML = message;
     }
+
+
+    //
+    // function displayMessageBlock() {
+    //     document.getElementById("message-block").classList.remove("disappearing");
+    //     setTimeout(() => document.getElementById("message-block").classList.add("disappearing"), 0);
+    // }
 
     //
     // function rowListener() {
@@ -193,7 +203,7 @@ $(document).ready(function () {
     //     })
     //     prevPointColor = curPointColor;
     // }
-    //
+
     function graphListener(event) {
 
         if (!validateR()) {
@@ -333,7 +343,7 @@ $(document).ready(function () {
 
     document.querySelector(".main-button.submit").addEventListener("click", function (event) {
         if (!validateData()) {
-            event.preventDefault();
+            //event.preventDefault();
         } else {
             let x, y, r;
             x = getX();
@@ -359,6 +369,11 @@ $(document).ready(function () {
         function () {
             drawDot(getX(), getY(), getR());
         });
+
+    // document.querySelector('.hidden_button_display_message_block input').addEventListener("click",
+    //     function () {
+    //        displayMessageBlock();
+    //     });
 
     restoreR();
 

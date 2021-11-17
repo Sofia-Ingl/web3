@@ -13,6 +13,20 @@
     <ui:define name="head">
         <title>Web$3 #Main</title>
         <h:outputScript name="js/script2.js"/>
+        <script type="text/javascript">
+            function refreshMessageBlock(data) {
+                if (data.status === "success") {
+                    document.getElementById("info-span").innerHTML = "";
+                    let xm = document.querySelector("#x-message").innerHTML;
+                    let ym = document.querySelector("#y-message").innerHTML;
+                    let rm = document.querySelector("#r-message").innerHTML;
+                    if (xm!=="" || ym!=="" || rm!=="") {
+                        document.getElementById("message-block").classList.remove("disappearing");
+                        setTimeout(() => document.getElementById("message-block").classList.add("disappearing"), 0);
+                    }
+                }
+            }
+        </script>
     </ui:define>
 
     <ui:define name="link">
@@ -53,7 +67,7 @@
                         </div>
 
                         <h:panelGroup styleClass="hidden_x">
-                            <h:inputHidden id="x-hidden" value="#{entries.currentEntry.x}" >
+                            <h:inputHidden id="x-hidden" value="#{entries.currentEntry.x}">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="-5" maximum="5"/>
                             </h:inputHidden>
@@ -68,7 +82,8 @@
                         <div class="input-areas">
 
                             <p:slider for="y-field" minValue="-3" maxValue="3" step="0.5"
-                                      styleClass="inner-input-field" onSlideEnd="document.querySelector('.hidden_button_refresh_graph input').click();"/>
+                                      styleClass="inner-input-field"
+                                      onSlideEnd="document.querySelector('.hidden_button_refresh_graph input').click();"/>
                             <h:inputText disabled="true" id="y-field" styleClass="inner-input-field y-input-field"/>
 
                         </div>
@@ -112,20 +127,22 @@
 
 
                         <h:panelGroup styleClass="hidden_r">
-                            <h:inputHidden id="r-hidden" value="#{entries.currentEntry.r}" >
+                            <h:inputHidden id="r-hidden" value="#{entries.currentEntry.r}">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="3"/>
                             </h:inputHidden>
                         </h:panelGroup>
-                        
+
                     </div>
 
                     <div id="main-button-block">
                         <h:commandButton styleClass="submit main-button" action="#{entries.addEntry}"
                                          value="Submit">
-                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden" render="result-table" />
+                            <f:ajax event="click" execute="x-hidden y-hidden r-hidden"
+                                    render="result-table x-message y-message r-message" onevent="refreshMessageBlock"/>
                         </h:commandButton>
-                        <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}" render="result-table"
+                        <h:commandButton styleClass="reset main-button" action="#{entries.clearEntries}"
+                                         render="result-table"
                                          value="Reset">
                             <f:ajax event="click"/>
                         </h:commandButton>
@@ -137,8 +154,28 @@
 
 
             <div id="message-block" class="content-plate">
-                <span id="info-span">Oh shit here we go again...</span>
+                <span>Messages:</span>
+
+                <div id="messages-plate">
+                    <div>
+                        <span id="info-span"/>
+                    </div>
+                    <div>
+                        <h:message for="values-form:x-hidden" id="x-message"/>
+                    </div>
+                    <div>
+                        <h:message for="values-form:y-hidden" id="y-message"/>
+                    </div>
+                    <div>
+                        <h:message for="values-form:r-hidden" id="r-message"/>
+                    </div>
+                </div>
+
             </div>
+
+            <!--            <div id="js-message-block" class="content-plate">-->
+            <!--                <span id="info-span">Oh shit here we go again...</span>-->
+            <!--            </div>-->
 
         </div>
 
@@ -148,7 +185,8 @@
             </div>
 
             <div id="table-scroll-container">
-                <h:dataTable id="result-table" styleClass="result-table" value="#{entries.entryBeansContainer}" var="row">
+                <h:dataTable id="result-table" styleClass="result-table" value="#{entries.entryBeansContainer}"
+                             var="row">
                     <h:column headerClass="coords-col">
                         <f:facet name="header">X</f:facet>
                         <h:outputText value="#{row.x}"/>
@@ -179,9 +217,6 @@
     </ui:define>
 
     <ui:define name="scripts">
-<!--        <h:outputScript name="js/script2.js"/>-->
-
-<!--        <h:outputScript name="js/prep.js"/>-->
     </ui:define>
 
 </ui:composition>

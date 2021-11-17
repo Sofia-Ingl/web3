@@ -149,6 +149,7 @@ tr {
 
 
 #message-block {
+
     padding: 6px;
     font-size: 14px;
     text-align: left;
@@ -160,7 +161,7 @@ tr {
 
 .disappearing {
     opacity: 1;
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-name: disappear;
 }
 
